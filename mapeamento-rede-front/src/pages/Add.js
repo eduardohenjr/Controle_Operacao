@@ -389,11 +389,30 @@ export default function Home() {
         {modalEnderecoExibir && (
           <div className="modal-tipo-cabo">
             <div className="modal-tipo-cabo-content">
-              {typeof enderecoExibir === 'object' && enderecoExibir.tipo === 'pop' ? (
-                <>
-                  <h3>Nome:</h3>
-                  <div className="endereco-exibir">{enderecoExibir.nome}</div>
-                </>
+              {typeof enderecoExibir === 'object' && enderecoExibir !== null ? (
+                enderecoExibir.tipo === 'pop' ? (
+                  <>
+                    <h3>Nome do POP:</h3>
+                    <div className="endereco-exibir">{enderecoExibir.nome}</div>
+                  </>
+                ) : enderecoExibir.tipo === 'cliente' ? (
+                  <>
+                    <h3>Endereço do Cliente:</h3>
+                    <div className="endereco-exibir">{enderecoExibir.endereco}</div>
+                  </>
+                ) : enderecoExibir.tipo === 'caixa' ? (
+                  <>
+                    <h3>Endereço da Caixa:</h3>
+                    <div className="endereco-exibir">{enderecoExibir.endereco}</div>
+                    <h4>Coordenada:</h4>
+                    <div className="endereco-exibir">{enderecoExibir.coord}</div>
+                  </>
+                ) : (
+                  <>
+                    <h3>Informação:</h3>
+                    <div className="endereco-exibir">{JSON.stringify(enderecoExibir)}</div>
+                  </>
+                )
               ) : (
                 <>
                   <h3>Endereço:</h3>
@@ -610,7 +629,8 @@ export default function Home() {
                             setEnderecoExibir({ tipo: 'pop', nome: valor.nome });
                             setModalEnderecoExibir(true);
                           } else {
-                            alert(valor);
+                            setEnderecoExibir(valor);
+                            setModalEnderecoExibir(true);
                           }
                         } else {
                           handleSelecionarPonto(furo.id, lado);
@@ -629,26 +649,29 @@ export default function Home() {
                         else if (valor.endereco && valor.coord) tipo = 'caixa';
                       }
                       if (tipo === 'cliente') {
+                        // Ícone de rosto (cliente) AZUL
                         return (
                           <Group x={furo.x - 80} y={furo.y + OVAL_RADIUS_Y + 70}>
-                            <Circle radius={10} fill="#fff" stroke="#222" strokeWidth={1}/>
-                            <Circle radius={2} y={-1} fill="#222" />
-                            <Ellipse radiusX={3} radiusY={1.5} y={3} fill="#222" />
+                            <Circle radius={10} fill="#e3f0ff" stroke="#1976d2" strokeWidth={2}/>
+                            <Circle radius={2} y={-1} fill="#1976d2" />
+                            <Ellipse radiusX={3} radiusY={1.5} y={3} fill="#1976d2" />
                           </Group>
                         );
                       }
                       if (tipo === 'pop') {
+                        // Ícone de casinha (pop) VERMELHO
                         return (
                           <Group x={furo.x - 80} y={furo.y + OVAL_RADIUS_Y + 70}>
-                            <Rect x={-6.5} y={0} width={13} height={11} fill="#fff" stroke="#222" strokeWidth={1}/>
-                            <Line points={[-8,0,0,-10,8,0]} closed fill="#fff" stroke="#222" strokeWidth={1}/>
+                            <Rect x={-6.5} y={0} width={13} height={11} fill="#fff0f0" stroke="#d32f2f" strokeWidth={2}/>
+                            <Line points={[-8,0,0,-10,8,0]} closed fill="#fff0f0" stroke="#d32f2f" strokeWidth={2}/>
                           </Group>
                         );
                       }
                       if (tipo === 'caixa') {
+                        // Ícone de circunferência (caixa) VERDE
                         return (
                           <Group x={furo.x - 80} y={furo.y + OVAL_RADIUS_Y + 70}>
-                            <Circle radius={6} fill="#fff" stroke="#222" strokeWidth={2}/>
+                            <Circle radius={8} fill="#e6ffe6" stroke="#388e3c" strokeWidth={3}/>
                           </Group>
                         );
                       }
@@ -675,7 +698,8 @@ export default function Home() {
                             setEnderecoExibir({ tipo: 'pop', nome: valor.nome });
                             setModalEnderecoExibir(true);
                           } else {
-                            alert(valor);
+                            setEnderecoExibir(valor);
+                            setModalEnderecoExibir(true);
                           }
                         } else {
                           handleSelecionarPonto(furo.id, lado);
@@ -694,26 +718,29 @@ export default function Home() {
                         else if (valor.endereco && valor.coord) tipo = 'caixa';
                       }
                       if (tipo === 'cliente') {
+                        // Ícone de rosto (cliente) AZUL
                         return (
                           <Group x={furo.x + 80} y={furo.y + OVAL_RADIUS_Y + 70}>
-                            <Circle radius={10} fill="#fff" stroke="#222" strokeWidth={1}/>
-                            <Circle radius={2} y={-1} fill="#222" />
-                            <Ellipse radiusX={3} radiusY={1.5} y={3} fill="#222" />
+                            <Circle radius={10} fill="#e3f0ff" stroke="#1976d2" strokeWidth={2}/>
+                            <Circle radius={2} y={-1} fill="#1976d2" />
+                            <Ellipse radiusX={3} radiusY={1.5} y={3} fill="#1976d2" />
                           </Group>
                         );
                       }
                       if (tipo === 'pop') {
+                        // Ícone de casinha (pop) VERMELHO
                         return (
                           <Group x={furo.x + 80} y={furo.y + OVAL_RADIUS_Y + 70}>
-                            <Rect x={-6.5} y={0} width={13} height={11} fill="#fff" stroke="#222" strokeWidth={1}/>
-                            <Line points={[-8,0,0,-10,8,0]} closed fill="#fff" stroke="#222" strokeWidth={1}/>
+                            <Rect x={-6.5} y={0} width={13} height={11} fill="#fff0f0" stroke="#d32f2f" strokeWidth={2}/>
+                            <Line points={[-8,0,0,-10,8,0]} closed fill="#fff0f0" stroke="#d32f2f" strokeWidth={2}/>
                           </Group>
                         );
                       }
                       if (tipo === 'caixa') {
+                        // Ícone de circunferência (caixa) VERDE
                         return (
                           <Group x={furo.x + 80} y={furo.y + OVAL_RADIUS_Y + 70}>
-                            <Circle radius={10} fill="#fff" stroke="#222" strokeWidth={2}/>
+                            <Circle radius={8} fill="#e6ffe6" stroke="#388e3c" strokeWidth={3}/>
                           </Group>
                         );
                       }
@@ -769,7 +796,8 @@ export default function Home() {
                             setEnderecoExibir({ tipo: 'pop', nome: valor.nome });
                             setModalEnderecoExibir(true);
                           } else {
-                            alert(valor);
+                            setEnderecoExibir(valor);
+                            setModalEnderecoExibir(true);
                           }
                         } else {
                           handleSelecionarPonto(furo.id, lado);
@@ -788,29 +816,29 @@ export default function Home() {
                         else if (valor.endereco && valor.coord) tipo = 'caixa';
                       }
                       if (tipo === 'cliente') {
-                        // Ícone de rosto
+                        // Ícone de rosto (cliente) AZUL
                         return (
                           <Group x={idx < 2 ? furo.x - PONTO_AF_DIST - 115 : furo.x + PONTO_AF_DIST + 115} y={furo.y}>
-                            <Circle radius={10} fill="#fff" stroke="#222" strokeWidth={1}/>
-                            <Circle radius={2} y={-1} fill="#222" />
-                            <Ellipse radiusX={3} radiusY={1.5} y={3} fill="#222" />
+                            <Circle radius={10} fill="#e3f0ff" stroke="#1976d2" strokeWidth={2}/>
+                            <Circle radius={2} y={-1} fill="#1976d2" />
+                            <Ellipse radiusX={3} radiusY={1.5} y={3} fill="#1976d2" />
                           </Group>
                         );
                       }
                       if (tipo === 'pop') {
-                        // Ícone de casinha
+                        // Ícone de casinha (pop) VERMELHO
                         return (
                           <Group x={idx < 2 ? furo.x - PONTO_AF_DIST - 115 : furo.x + PONTO_AF_DIST + 115} y={furo.y - 3}>
-                            <Rect x={-6.5} y={0} width={13} height={11} fill="#fff" stroke="#222" strokeWidth={1}/>
-                            <Line points={[-8,0,0,-10,8,0]} closed fill="#fff" stroke="#222" strokeWidth={1}/>
+                            <Rect x={-6.5} y={0} width={13} height={11} fill="#fff0f0" stroke="#d32f2f" strokeWidth={2}/>
+                            <Line points={[-8,0,0,-10,8,0]} closed fill="#fff0f0" stroke="#d32f2f" strokeWidth={2}/>
                           </Group>
                         );
                       }
                       if (tipo === 'caixa') {
-                        // Ícone de circunferência
+                        // Ícone de circunferência (caixa) VERDE
                         return (
                           <Group x={idx < 2 ? furo.x - PONTO_AF_DIST - 115 : furo.x + PONTO_AF_DIST + 115} y={furo.y}>
-                            <Circle radius={8} fill="#fff" stroke="#222" strokeWidth={2}/>
+                            <Circle radius={8} fill="#e6ffe6" stroke="#388e3c" strokeWidth={3}/>
                           </Group>
                         );
                       }
