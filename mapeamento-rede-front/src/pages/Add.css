@@ -20,8 +20,8 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  padding-top: 72px;
-  padding-bottom: 72px;
+  padding-top: 40px;
+  padding-bottom: 10px;
 }
 
 .menu-superior {
@@ -76,7 +76,7 @@
 .canvas-stage {
   background: transparent;
   border-radius: 12px;
-  margin-top: 150px;
+  margin-top: 50px;
 }
 
 /* Modais e botões dos modais */

@@ -4,7 +4,7 @@ import { Stage, Layer, Circle, Ellipse, Line, Text, Group, Rect } from 'react-ko
 import './Add.css';
 import logo from '../imgs/logo.png';
 
-const CAIXA_CENTER = { x: 320, y: 125 };
+const CAIXA_CENTER = { x: 320, y: 122 };
 const CAIXA_RADIUS = 120;
 const FURO_RADIUS = 20;
 const OVAL_RADIUS_X = 44;
@@ -85,6 +85,11 @@ export default function Home() {
   const [caboSelecionado, setCaboSelecionado] = useState(null);
   const [fitasSelecionadas, setFitasSelecionadas] = useState([]);
   const FUROS = getFuros();
+
+  // Novo estado para modal de endereço inicial
+  const [modalEnderecoCaixaInicial, setModalEnderecoCaixaInicial] = useState(true);
+  const [enderecoCaixa, setEnderecoCaixa] = useState("");
+  const [coordCaixa, setCoordCaixa] = useState("");
 
   function handleAdicionarCabo() {
     setModalTipoCabo(true);
@@ -204,17 +209,51 @@ export default function Home() {
     setFitasSelecionadas([]);
   }
 
+  function handleSalvarEnderecoCaixaInicial() {
+    setModalEnderecoCaixaInicial(false);
+  }
+
   return (
     <div className="centralizador-pagina">
       <div className="canvas-wrapper">
-        <button className="voltar-btn" onClick={() => navigate('/')}>
-          ← Voltar
-        </button>
+        <button className="voltar-btn" onClick={() => navigate('/')}>← Voltar</button>
         <nav className="menu-superior">
           <div style={{display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center'}}>
             <img src={logo} alt="Logo" />
           </div>
         </nav>
+        {/* Modal de endereço inicial da caixa */}
+        {modalEnderecoCaixaInicial && (
+          <div className="modal-tipo-cabo">
+            <div className="modal-tipo-cabo-content">
+              <h3>Informe o endereço da caixa</h3>
+              <input
+                type="text"
+                value={enderecoCaixa}
+                onChange={e => setEnderecoCaixa(e.target.value)}
+                placeholder="Endereço"
+              />
+              <h3 style={{marginTop: 24}}>Informe a coordenada (latitude,longitude)</h3>
+              <input
+                type="text"
+                value={coordCaixa}
+                onChange={e => setCoordCaixa(e.target.value)}
+                placeholder="-23.123456,-43.123456"
+              />
+              <div style={{display: 'flex', gap: 16, marginTop: 24}}>
+                <button onClick={handleSalvarEnderecoCaixaInicial} disabled={!enderecoCaixa || !coordCaixa}>Salvar</button>
+              </div>
+            </div>
+          </div>
+        )}
+        {/* Exibe endereço acima da caixa, clicável */}
+        {enderecoCaixa && coordCaixa && (
+          <div style={{textAlign: 'center', marginBottom: 16, marginTop: 32}}>
+            <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(coordCaixa)}`} target="_blank" rel="noopener noreferrer" className="caixa-link">
+              {enderecoCaixa}
+            </a>
+          </div>
+        )}
         {/* Modal de seleção de tipo de cabo */}
         {modalTipoCabo && (
           <div className="modal-tipo-cabo">
@@ -376,7 +415,7 @@ export default function Home() {
             Adicionar Cabo
           </button>
         </div>
-        <Stage width={650} height={340} className="canvas-stage">
+        <Stage width={650} height={350} className="canvas-stage">
           <Layer>
             {/* Caixa circular */}
             <Circle
