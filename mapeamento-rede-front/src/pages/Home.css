@@ -25,3 +25,39 @@
 .home-btn.adicionar {
   background: #43a047;
 }
+
+.voltar-btn {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 1100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s;
+}
+
+.voltar-btn:hover {
+  background: #1251a3;
+}
+
+.canvas-wrapper {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 30px 28px rgba(0,0,0,0.08);
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding-top: 72px;
+  padding-bottom: 72px;
+  min-width: 750px;
+  min-height: 450px;
+}

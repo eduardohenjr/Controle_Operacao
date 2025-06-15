@@ -49,3 +49,22 @@
   align-items: center;
   justify-content: center;
 }
+
+.voltar-btn {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 1100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s;
+  position: absolute;
+  top: 75px; /* Altere este valor para a distância desejada */
+  left: 16px;
+}

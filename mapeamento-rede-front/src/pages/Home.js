@@ -6,7 +6,7 @@ export default function Home() {
   const navigate = useNavigate();
   return (
     <div className="centralizador-pagina">
-      <button className="home-btn pesquisar">
+      <button className="home-btn pesquisar" onClick={() => navigate('/search')}>
         Pesquisar caixa
       </button>
       <button className="home-btn adicionar" onClick={() => navigate('/add')}>
