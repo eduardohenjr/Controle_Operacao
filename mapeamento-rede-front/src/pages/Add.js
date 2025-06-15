@@ -200,8 +200,27 @@ export default function Home() {
     setModalFitas(true);
   }
   function handleToggleFita(cor) {
-    setFitasSelecionadas(prev => prev.includes(cor) ? prev.filter(f => f !== cor) : [...prev, cor]);
+    setFitasSelecionadas(prev => {
+      if (prev.length >= 4) {
+        if (!window.__fita_alerted) {
+          alert('Só é permitido selecionar até 4 fitas por cabo.');
+          window.__fita_alerted = true;
+          setTimeout(() => { window.__fita_alerted = false; }, 500);
+        }
+        return prev;
+      }
+      return [...prev, cor];
+    });
   }
+
+  function handleRemoverFita(cor) {
+    setFitasSelecionadas(prev => {
+      const idx = prev.lastIndexOf(cor);
+      if (idx === -1) return prev;
+      return prev.filter((f, i) => i !== idx);
+    });
+  }
+
   function handleSalvarFitas() {
     setCabos(prev => prev.map((c, i) => i === caboSelecionado ? { ...c, fitas: fitasSelecionadas } : c));
     setModalFitas(false);
@@ -296,6 +315,7 @@ export default function Home() {
                 <button onClick={() => handleEscolherTipoPonto('cliente')}>Cliente</button>
                 <button onClick={() => handleEscolherTipoPonto('caixa')}>Caixa</button>
                 <button onClick={() => handleEscolherTipoPonto('pop')}>POP</button>
+                <button style={{background: '#0000FF', color: '#fff'}} onClick={() => { setModalTipoPonto(false); setPontoSelecionado(null); setTipoPonto(null); }}>Voltar</button>
               </div>
             </div>
           </div>
@@ -398,9 +418,56 @@ export default function Home() {
             <div className="modal-tipo-cabo-content">
               <h3>Selecione as fitas de cor</h3>
               <div className="fitas-cores-lista">
-                {FITAS_CORES.map(cor => (
-                  <div key={cor} onClick={() => handleToggleFita(cor)} className={`fita-cor ${fitasSelecionadas.includes(cor) ? 'selecionada' : ''}`} style={{background: cor}} />
-                ))}
+                {FITAS_CORES.map(cor => {
+                  const count = fitasSelecionadas.filter(f => f === cor).length;
+                  return (
+                    <div key={cor} className={`fita-cor ${count > 0 ? 'selecionada' : ''}`} style={{background: cor, position: 'relative'}}>
+                      <div onClick={() => handleToggleFita(cor)} style={{width: '100%', height: '100%'}} />
+                      {count > 0 && (
+                        <>
+                          <span style={{
+                            position: 'absolute',
+                            bottom: 2,
+                            top: -12,
+                            right: 20,
+                            background: 'rgba(0,0,0,0.7)',
+                            color: '#fff',
+                            borderRadius: '50%',
+                            width: 18,
+                            height: 18,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: 13,
+                            fontWeight: 600
+                          }}>{count}</span>
+                          <button
+                            onClick={e => { e.stopPropagation(); handleRemoverFita(cor); }}
+                            style={{
+                              position: 'absolute',
+                              top: -12,
+                              left: 20,
+                              width: 18,
+                              height: 18,
+                              borderRadius: '50%',
+                              background: '#d32f2f',
+                              color: '#fff',
+                              border: 'none',
+                              fontSize: 13,
+                              fontWeight: 700,
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              padding: 0
+                            }}
+                            title="Remover uma ocorrência desta cor"
+                          >-</button>
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
               <div className="fitas-botoes">
                 <button onClick={handleSalvarFitas}>Salvar</button>
@@ -417,7 +484,7 @@ export default function Home() {
           {selecionandoFuro && (
             <button
               className="cancelar-btn"
-              style={{ marginLeft: 16, color: '#222'}}
+              style={{ marginLeft: 16, background: '#ea2d2d', color: '#222'}}
               onClick={() => {
                 setSelecionandoFuro(false);
                 setTipoSelecionado(null);
@@ -465,15 +532,19 @@ export default function Home() {
               return (
                 furo.oval ? (
                   <Group key={furo.id} onClick={() => {
-                    if (hasCabo) {
-                      handleRemoverCaboFuro(furo.id);
-                      return;
-                    }
                     // Permite até 2 cabos na oval
                     const cabosNaOval = cabos.filter(c => c.furoId === furo.id);
                     if (selecionandoFuro && tipoSelecionado && cabosNaOval.length < 2) {
                       // Se já existe um cabo, só permite inserir outro do mesmo tipo
                       if (cabosNaOval.length === 1 && cabosNaOval[0].tipo !== tipoSelecionado) return;
+                      // Checa corretamente o lado do ponto
+                      const lado = cabosNaOval.length === 0 ? 'esq' : 'dir';
+                      const key = `${furo.id}_${lado}`;
+                      // Força atualização do estado antes de checar
+                      if (!enderecosPontos[key] || enderecosPontos[key] === '') {
+                        alert(`Crie um ponto (${lado === 'esq' ? 'esquerdo' : 'direito'}) (cliente, caixa ou pop) antes de adicionar o cabo!`);
+                        return;
+                      }
                       // Define pontoExterno: esquerda se for o primeiro, direita se for o segundo
                       const pontoExterno = cabosNaOval.length === 0
                         ? { x: furo.x - 50, y: furo.y + OVAL_RADIUS_Y + 70 }
@@ -484,6 +555,13 @@ export default function Home() {
                       ]);
                       setSelecionandoFuro(false);
                       setTipoSelecionado(null);
+                      return;
+                    }
+                    // Só permite remover se não estiver em modo de inserção
+                    const hasCabo = cabosNaOval.length > 0;
+                    if (hasCabo && !selecionandoFuro) {
+                      handleRemoverCaboFuro(furo.id);
+                      return;
                     }
                   }}>
                     <Ellipse
@@ -639,7 +717,7 @@ export default function Home() {
                   // deslocamento ao longo de 105 graus
                   const angle = 118 * Math.PI / 180;
                   const diagonal = 12 * i - ((cabo.fitas.length-1) * 6);
-                  const offsetX = diagonal * Math.cos(angle) - 10;
+                  const offsetX = diagonal * Math.cos(angle) - 8;
                   const offsetY = diagonal * Math.sin(angle) + 13;
                   return (
                     <Rect
