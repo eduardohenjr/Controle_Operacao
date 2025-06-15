@@ -1,0 +1,208 @@
+/* Limpeza e foco apenas no layout externo e botões */
+.centralizador-pagina {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  width: 100vw;
+  background: #f5f7fa;
+}
+
+/* Layout principal */
+.canvas-wrapper {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 30px 28px rgba(0,0,0,0.08);
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding-top: 72px;
+  padding-bottom: 72px;
+}
+
+.menu-superior {
+  display: flex;
+  gap: 1rem;
+  background: #222;
+  padding: 1rem 2rem;
+  border-radius: 16px 16px 0 0;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+  min-height: 56px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  justify-content: center;
+}
+.menu-superior img {
+  height: 38px;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.menu-superior button {
+  color: #fff;
+  background: #007bff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.menu-superior button:disabled {
+  background: #bbb;
+  cursor: not-allowed;
+}
+.menu-superior input[type="color"] {
+  border: none;
+  width: 32px;
+  height: 32px;
+  background: none;
+  cursor: pointer;
+}
+.menu-superior input[type="text"] {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: 1px solid #bbb;
+  font-size: 1rem;
+}
+
+.canvas-stage {
+  background: transparent;
+  border-radius: 12px;
+  margin-top: 150px;
+}
+
+/* Modais e botões dos modais */
+.modal-tipo-cabo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal-tipo-cabo-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px 40px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  min-width: 340px;
+  max-width: 90vw;
+}
+.tipos-cabo-lista button {
+  margin: 0.5rem;
+  min-width: 80px;
+  font-size: 1rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  border: none;
+  background: #1976d2;
+  color: #fff;
+  cursor: pointer;
+}
+.tipos-cabo-lista button:hover {
+  background: #1565c0;
+}
+
+/* Botão adicionar cabo */
+.add-cabo-btn {
+  min-width: 180px;
+  font-size: 1.1rem;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  background: #222;
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  cursor: pointer;
+}
+
+.add-cabo-btn:disabled {
+  background: #bbb;
+  cursor: not-allowed;
+}
+
+/* Estilos das fitas de cor, botões de fitas, exibição de endereço e links de caixa */
+.fitas-cores-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 0;
+}
+.fita-cor {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 2px solid #bbb;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.fita-cor.selecionada {
+  border: 3px solid #1976d2;
+}
+.fitas-botoes {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.endereco-exibir {
+  margin: 24px 0;
+  font-size: 1.1rem;
+  color: #1976d2;
+  font-weight: 500;
+}
+.caixa-link {
+  color: #1976d2;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-decoration: underline;
+  margin: 24px 0;
+  display: inline-block;
+}
+.remover-btn {
+  background: #d32f2f;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.cancelar-btn {
+  background: #bbb;
+  color: #222;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.voltar-btn {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 1100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s;
+}
+.voltar-btn:hover {
+  background: #1251a3;
+}

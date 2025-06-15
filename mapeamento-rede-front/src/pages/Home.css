@@ -1,63 +1,27 @@
-/* Limpeza e foco apenas no layout externo e botões */
+/* Layout centralizado para a página Home */
 .centralizador-pagina {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh;
-  width: 100vw;
-  background: #f5f7fa;
-}
-.menu-superior {
-  display: flex;
-  gap: 1rem;
-  background: #222;
-  padding: 1rem 2rem;
-  border-radius: 16px 16px 0 0;
-  align-items: center;
-  width: 100%;
-  margin: 0;
-  box-sizing: border-box;
-  min-height: 56px;
-}
-.menu-superior button {
-  color: #fff;
-  background: #007bff;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-.menu-superior button:disabled {
-  background: #bbb;
-  cursor: not-allowed;
-}
-.menu-superior input[type="color"] {
-  border: none;
-  width: 32px;
-  height: 32px;
-  background: none;
-  cursor: pointer;
-}
-.menu-superior input[type="text"] {
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  border: 1px solid #bbb;
-  font-size: 1rem;
-}
-.canvas-wrapper {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 30px 28px rgba(0,0,0,0.08);
-  padding: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  height: 100vh;
 }
-.canvas-stage {
-  background: transparent;
-  border-radius: 12px;
-  margin-top: 150px;
+
+.home-btn {
+  min-width: 200px;
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  margin: 1rem;
+  border-radius: 8px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.home-btn.pesquisar {
+  background: #1976d2;
+}
+
+.home-btn.adicionar {
+  background: #43a047;
 }
