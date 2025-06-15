@@ -414,6 +414,18 @@ export default function Home() {
           <button onClick={handleAdicionarCabo} disabled={selecionandoFuro} className="add-cabo-btn">
             Adicionar Cabo
           </button>
+          {selecionandoFuro && (
+            <button
+              className="cancelar-btn"
+              style={{ marginLeft: 16, color: '#222'}}
+              onClick={() => {
+                setSelecionandoFuro(false);
+                setTipoSelecionado(null);
+              }}
+            >
+              Cancelar inserção
+            </button>
+          )}
         </div>
         <Stage width={650} height={350} className="canvas-stage">
           <Layer>
@@ -621,19 +633,46 @@ export default function Home() {
               // Posição central do cabo
               const midX = (furo.x + cabo.pontoExterno.x - 6) / 2;
               const midY = (furo.y + cabo.pontoExterno.y) / 2;
-              return cabo.fitas.map((cor, i) => (
-                <Rect
-                  key={cor}
-                  x={midX + (i * 12) - ((cabo.fitas.length-1) * 6)}
-                  y={midY - altura/2}
-                  width={10}
-                  height={altura}
-                  fill={cor}
-                  stroke="#222"
-                  strokeWidth={1}
-                  cornerRadius={2}
-                />
-              ));
+              const isOval = furo.oval;
+              return cabo.fitas.map((cor, i) => {
+                if (isOval) {
+                  // deslocamento ao longo de 105 graus
+                  const angle = 118 * Math.PI / 180;
+                  const diagonal = 12 * i - ((cabo.fitas.length-1) * 6);
+                  const offsetX = diagonal * Math.cos(angle) - 10;
+                  const offsetY = diagonal * Math.sin(angle) + 13;
+                  return (
+                    <Rect
+                      key={cor}
+                      x={midX + offsetX}
+                      y={midY - altura/2 + offsetY}
+                      width={10}
+                      height={altura}
+                      fill={cor}
+                      stroke="#222"
+                      strokeWidth={1}
+                      cornerRadius={2}
+                      rotation={118}
+                      offsetX={5}
+                      offsetY={altura - 3}
+                    />
+                  );
+                } else {
+                  return (
+                    <Rect
+                      key={cor}
+                      x={midX + (i * 12) - ((cabo.fitas.length-1) * 6)}
+                      y={midY - altura/2}
+                      width={10}
+                      height={altura}
+                      fill={cor}
+                      stroke="#222"
+                      strokeWidth={1}
+                      cornerRadius={2}
+                    />
+                  );
+                }
+              });
             })}
           </Layer>
         </Stage>
