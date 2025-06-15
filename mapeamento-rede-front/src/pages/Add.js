@@ -162,7 +162,10 @@ export default function Home() {
     }
   }
   function handleSalvarEndereco() {
-    setEnderecosPontos(prev => ({ ...prev, [pontoKey(pontoSelecionado)]: inputEndereco }));
+    setEnderecosPontos(prev => ({
+      ...prev,
+      [pontoKey(pontoSelecionado)]: { tipo: 'cliente', endereco: inputEndereco }
+    }));
     setModalEndereco(false);
     setInputEndereco('');
     setPontoSelecionado(null);
@@ -172,6 +175,7 @@ export default function Home() {
     setEnderecosPontos(prev => ({
       ...prev,
       [pontoKey(pontoSelecionado)]: {
+        tipo: 'caixa',
         endereco: inputEnderecoCaixa,
         coord: inputCoordCaixa
       }
@@ -613,6 +617,43 @@ export default function Home() {
                         }
                       }}
                     />
+                    {/* Ícone do tipo de ponto (esquerda oval) */}
+                    {(() => {
+                      const lado = 'esq';
+                      const key = `${furo.id}_${lado}`;
+                      const valor = enderecosPontos[key];
+                      let tipo = null;
+                      if (typeof valor === 'string') tipo = valor.toLowerCase();
+                      if (typeof valor === 'object' && valor !== null) {
+                        if (valor.tipo) tipo = valor.tipo.toLowerCase();
+                        else if (valor.endereco && valor.coord) tipo = 'caixa';
+                      }
+                      if (tipo === 'cliente') {
+                        return (
+                          <Group x={furo.x - 80} y={furo.y + OVAL_RADIUS_Y + 70}>
+                            <Circle radius={10} fill="#fff" stroke="#222" strokeWidth={1}/>
+                            <Circle radius={2} y={-1} fill="#222" />
+                            <Ellipse radiusX={3} radiusY={1.5} y={3} fill="#222" />
+                          </Group>
+                        );
+                      }
+                      if (tipo === 'pop') {
+                        return (
+                          <Group x={furo.x - 80} y={furo.y + OVAL_RADIUS_Y + 70}>
+                            <Rect x={-6.5} y={0} width={13} height={11} fill="#fff" stroke="#222" strokeWidth={1}/>
+                            <Line points={[-8,0,0,-10,8,0]} closed fill="#fff" stroke="#222" strokeWidth={1}/>
+                          </Group>
+                        );
+                      }
+                      if (tipo === 'caixa') {
+                        return (
+                          <Group x={furo.x - 80} y={furo.y + OVAL_RADIUS_Y + 70}>
+                            <Circle radius={6} fill="#fff" stroke="#222" strokeWidth={2}/>
+                          </Group>
+                        );
+                      }
+                      return null;
+                    })()}
                     <Circle
                       x={furo.x + 50}
                       y={furo.y + OVAL_RADIUS_Y + 70}
@@ -641,6 +682,43 @@ export default function Home() {
                         }
                       }}
                     />
+                    {/* Ícone do tipo de ponto (direita oval) */}
+                    {(() => {
+                      const lado = 'dir';
+                      const key = `${furo.id}_${lado}`;
+                      const valor = enderecosPontos[key];
+                      let tipo = null;
+                      if (typeof valor === 'string') tipo = valor.toLowerCase();
+                      if (typeof valor === 'object' && valor !== null) {
+                        if (valor.tipo) tipo = valor.tipo.toLowerCase();
+                        else if (valor.endereco && valor.coord) tipo = 'caixa';
+                      }
+                      if (tipo === 'cliente') {
+                        return (
+                          <Group x={furo.x + 80} y={furo.y + OVAL_RADIUS_Y + 70}>
+                            <Circle radius={10} fill="#fff" stroke="#222" strokeWidth={1}/>
+                            <Circle radius={2} y={-1} fill="#222" />
+                            <Ellipse radiusX={3} radiusY={1.5} y={3} fill="#222" />
+                          </Group>
+                        );
+                      }
+                      if (tipo === 'pop') {
+                        return (
+                          <Group x={furo.x + 80} y={furo.y + OVAL_RADIUS_Y + 70}>
+                            <Rect x={-6.5} y={0} width={13} height={11} fill="#fff" stroke="#222" strokeWidth={1}/>
+                            <Line points={[-8,0,0,-10,8,0]} closed fill="#fff" stroke="#222" strokeWidth={1}/>
+                          </Group>
+                        );
+                      }
+                      if (tipo === 'caixa') {
+                        return (
+                          <Group x={furo.x + 80} y={furo.y + OVAL_RADIUS_Y + 70}>
+                            <Circle radius={10} fill="#fff" stroke="#222" strokeWidth={2}/>
+                          </Group>
+                        );
+                      }
+                      return null;
+                    })()}
                   </Group>
                 ) : (
                   <Group key={furo.id} onClick={() => {
@@ -698,6 +776,46 @@ export default function Home() {
                         }
                       }}
                     />
+                    {/* Ícone do tipo de ponto */}
+                    {(() => {
+                      const lado = idx < 2 ? 'esq' : 'dir';
+                      const key = `${furo.id}_${lado}`;
+                      const valor = enderecosPontos[key];
+                      let tipo = null;
+                      if (typeof valor === 'string') tipo = valor.toLowerCase();
+                      if (typeof valor === 'object' && valor !== null) {
+                        if (valor.tipo) tipo = valor.tipo.toLowerCase();
+                        else if (valor.endereco && valor.coord) tipo = 'caixa';
+                      }
+                      if (tipo === 'cliente') {
+                        // Ícone de rosto
+                        return (
+                          <Group x={idx < 2 ? furo.x - PONTO_AF_DIST - 115 : furo.x + PONTO_AF_DIST + 115} y={furo.y}>
+                            <Circle radius={10} fill="#fff" stroke="#222" strokeWidth={1}/>
+                            <Circle radius={2} y={-1} fill="#222" />
+                            <Ellipse radiusX={3} radiusY={1.5} y={3} fill="#222" />
+                          </Group>
+                        );
+                      }
+                      if (tipo === 'pop') {
+                        // Ícone de casinha
+                        return (
+                          <Group x={idx < 2 ? furo.x - PONTO_AF_DIST - 115 : furo.x + PONTO_AF_DIST + 115} y={furo.y - 3}>
+                            <Rect x={-6.5} y={0} width={13} height={11} fill="#fff" stroke="#222" strokeWidth={1}/>
+                            <Line points={[-8,0,0,-10,8,0]} closed fill="#fff" stroke="#222" strokeWidth={1}/>
+                          </Group>
+                        );
+                      }
+                      if (tipo === 'caixa') {
+                        // Ícone de circunferência
+                        return (
+                          <Group x={idx < 2 ? furo.x - PONTO_AF_DIST - 115 : furo.x + PONTO_AF_DIST + 115} y={furo.y}>
+                            <Circle radius={8} fill="#fff" stroke="#222" strokeWidth={2}/>
+                          </Group>
+                        );
+                      }
+                      return null;
+                    })()}
                   </Group>
                 )
               );
