@@ -1,0 +1,6 @@
+@MapeamentoRedeApi_HostAddress = http://localhost:5236
+
+GET {{MapeamentoRedeApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "8/UEZ7xaBSQ=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\dudu2\\Projetos\\Mundivox\\Mapeamento_Rede\\MapeamentoRedeApi\\MapeamentoRedeApi.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dudu2\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.6\\microsoft.aspnetcore.openapi.9.0.6.nupkg.sha512",
+    "C:\\Users\\dudu2\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
