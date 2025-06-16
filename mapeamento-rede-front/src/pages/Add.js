@@ -91,6 +91,8 @@ export default function Home() {
   const [enderecoCaixa, setEnderecoCaixa] = useState("");
   const [coordCaixa, setCoordCaixa] = useState("");
 
+  const [modalConfirmarSalvar, setModalConfirmarSalvar] = useState(false);
+
   function handleAdicionarCabo() {
     setModalTipoCabo(true);
   }
@@ -244,7 +246,31 @@ export default function Home() {
           <div style={{display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'center'}}>
             <img src={logo} alt="Logo" />
           </div>
+          <button
+            className="btn-salvar"
+            onClick={() => setModalConfirmarSalvar(true)}
+          >
+            Salvar
+          </button>
         </nav>
+        {/* Modal de confirmação de salvar */}
+        {modalConfirmarSalvar && (
+          <div className="modal-confirmar-salvar">
+            <div className="modal-confirmar-salvar-content">
+              <h3>Deseja confirmar o registro?</h3>
+              <div className="modal-confirmar-salvar-botoes">
+                <button
+                  className="btn-sim"
+                  onClick={() => {/* ação de salvar aqui */ setModalConfirmarSalvar(false);}}
+                >Sim</button>
+                <button
+                  className="btn-nao"
+                  onClick={() => setModalConfirmarSalvar(false)}
+                >Não</button>
+              </div>
+            </div>
+          </div>
+        )}
         {/* Modal de endereço inicial da caixa */}
         {modalEnderecoCaixaInicial && (
           <div className="modal-tipo-cabo">
@@ -261,7 +287,7 @@ export default function Home() {
                 type="text"
                 value={coordCaixa}
                 onChange={e => setCoordCaixa(e.target.value)}
-                placeholder="-23.123456,-43.123456"
+                placeholder="Coordenadas"
               />
               <div style={{display: 'flex', gap: 16, marginTop: 24}}>
                 <button onClick={handleSalvarEnderecoCaixaInicial} disabled={!enderecoCaixa || !coordCaixa}>Salvar</button>
