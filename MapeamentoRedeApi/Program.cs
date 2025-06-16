@@ -1,4 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using MapeamentoRedeApi;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Configura o DbContext com PostgreSQL
+builder.Services.AddDbContext<MapeamentoRedeContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Adiciona serviços necessários
 builder.Services.AddOpenApi();

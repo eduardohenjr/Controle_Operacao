@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MapeamentoRedeApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+22302c82474ab935eb4c4e3e772f648c56ef9661")]
 [assembly: System.Reflection.AssemblyProductAttribute("MapeamentoRedeApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MapeamentoRedeApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
